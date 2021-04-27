@@ -15,6 +15,9 @@ Including another URLconf
 """
 from django.urls import path
 
-urlpatterns = [
+from . import views
 
+urlpatterns = [
+    path('get_locations_list', views.get_locations_list),
+    path('get_location_detail', views.get_location_detail),
 ]
