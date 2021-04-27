@@ -23,3 +23,5 @@ class ResponseStatus(Enum):
     # 正常错误
     REQUEST_METHOD_ERROR = (40000, '请求方法错误')
     JSON_DECODE_ERROR = (40001, 'JSON 解析错误')
+    MISSING_PARAMETER_ERROR = (40002, '缺少参数')
+    BAD_PARAMETER_ERROR = (40003, '参数错误')
