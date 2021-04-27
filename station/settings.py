@@ -84,8 +84,14 @@ WSGI_APPLICATION = 'station.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+
+        'NAME': config.get('MYSQL_DATABASE_NAME'),
+        'USER': config.get('MYSQL_DATABASE_USER'),
+        'PASSWORD': config.get('MYSQL_DATABASE_PASSWORD'),
+
+        'HOST': config.get('MYSQL_DATABASE_HOST'),
+        'PORT': config.get('MYSQL_DATABASE_PORT')
     }
 }
 
