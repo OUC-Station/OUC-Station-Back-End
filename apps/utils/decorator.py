@@ -1,3 +1,4 @@
+from typing import Union
 from functools import wraps
 
 from apps.utils.response_status import ResponseStatus
@@ -16,3 +17,30 @@ def Protect(func):
             return process_response(request, ResponseStatus.UNEXPECTED_ERROR)
 
     return wrapper
+
+
+def RequiredMethod(method: Union[str, list]):
+    """
+    请求方式限制装饰器
+
+    :param method: 允许的请求方法
+    """
+    def decorator(func):
+        @wraps(func)
+        def wrapper(request):
+            if isinstance(method, str):
+                if request.method == method:
+                    return func(request)
+                else:
+                    return process_response(request, ResponseStatus.REQUEST_METHOD_ERROR)
+            elif isinstance(method, list):
+                if request.method in method:
+                    return func(request)
+                else:
+                    return process_response(request, ResponseStatus.REQUEST_METHOD_ERROR)
+            else:
+                return process_response(request, ResponseStatus.UNEXPECTED_ERROR)
+
+        return wrapper
+
+    return decorator
