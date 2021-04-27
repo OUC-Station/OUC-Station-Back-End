@@ -18,6 +18,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('ueditor/', include('DjangoUeditor.urls')),
 
     path('api/location/', include(('apps.location.urls', 'apps.location'), namespace='location')),
+    path('api/activity/', include(('apps.activity.urls', 'apps.activity'), namespace='activity')),
 ]

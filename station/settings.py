@@ -45,7 +45,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'apps.location'
+    'DjangoUeditor',
+
+    'apps.location',
+    'apps.activity',
+    'apps.bbs',
+    'apps.suggestion'
 ]
 
 MIDDLEWARE = [
@@ -139,3 +144,5 @@ STATIC_ROOT = './static/'
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = './media/'
+
+ACTIVITIES_PER_PAGE = 10
