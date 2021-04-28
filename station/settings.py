@@ -163,3 +163,7 @@ CACHES = {
         }
     }
 }
+
+
+# session age
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 2
