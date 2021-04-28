@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'apps.location',
     'apps.activity',
     'apps.bbs',
-    'apps.suggestion'
+    'apps.suggestion',
+    'apps.account',
 ]
 
 MIDDLEWARE = [
@@ -158,12 +159,13 @@ CACHES = {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
             'CONNECTION_POOL_KWARGS': {
                 'max_connections': 100,
-                'decode_responses': True
             },
         }
     }
 }
 
 
-# session age
+# session
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_CACHE_ALIAS = 'default'
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 2
