@@ -146,3 +146,20 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = './media/'
 
 ACTIVITIES_PER_PAGE = 10
+
+
+# Cache Redis config
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'CONNECTION_POOL_KWARGS': {
+                'max_connections': 100,
+                'decode_responses': True
+            },
+        }
+    }
+}
