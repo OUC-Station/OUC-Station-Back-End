@@ -23,4 +23,6 @@ urlpatterns = [
     path('api/location/', include(('apps.location.urls', 'apps.location'), namespace='location')),
     path('api/activity/', include(('apps.activity.urls', 'apps.activity'), namespace='activity')),
     path('api/account/', include(('apps.account.urls', 'apps.account'), namespace='account')),
+    path('api/bbs/', include(('apps.bbs.urls', 'apps.bbs'), namespace='bbs')),
+    path('api/suggestion/', include(('apps.suggestion.urls', 'apps.suggestion'), namespace='suggestion')),
 ]
