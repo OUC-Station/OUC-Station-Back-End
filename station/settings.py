@@ -147,6 +147,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = './media/'
 
 ACTIVITIES_PER_PAGE = 10
+TOPICS_PER_PAGE = 10
 
 
 # Cache Redis config
