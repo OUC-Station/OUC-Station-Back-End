@@ -175,3 +175,6 @@ SESSION_COOKIE_AGE = 60 * 60 * 24 * 2
 # APP
 WX_APPID = config.get('WX_APPID')
 WX_SECRET = config.get('WX_SECRET')
+
+# IMAGE
+IMAGE_MAX_SIZE = 5 * 1024 * 1024

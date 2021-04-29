@@ -16,9 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from apps.utils.image_uploader import upload
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('ueditor/', include('DjangoUeditor.urls')),
+
+    path('api/upload', upload),
 
     path('api/location/', include(('apps.location.urls', 'apps.location'), namespace='location')),
     path('api/activity/', include(('apps.activity.urls', 'apps.activity'), namespace='activity')),
