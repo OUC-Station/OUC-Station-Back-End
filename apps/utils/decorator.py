@@ -44,3 +44,18 @@ def RequiredMethod(method: Union[str, list]):
         return wrapper
 
     return decorator
+
+
+def LoginRequired(func):
+    """
+    要求登陆装饰器
+    """
+    @wraps(func)
+    def wrapper(request):
+        if request.session.get('openid', None) is None:
+            return process_response(request, ResponseStatus.LOGIN_REQUIRED_ERROR)
+
+        # 正常处理
+        return func(request)
+
+    return
