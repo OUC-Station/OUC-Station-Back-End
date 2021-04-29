@@ -169,3 +169,8 @@ CACHES = {
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 SESSION_CACHE_ALIAS = 'default'
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 2
+
+
+# APP
+WX_APPID = config.get('WX_APPID')
+WX_SECRET = config.get('WX_SECRET')

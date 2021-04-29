@@ -25,3 +25,7 @@ class ResponseStatus(Enum):
     JSON_DECODE_ERROR = (40001, 'JSON 解析错误')
     MISSING_PARAMETER_ERROR = (40002, '缺少参数')
     BAD_PARAMETER_ERROR = (40003, '参数错误')
+
+    WX_REQUEST_FAIL_ERROR = (40004, '微信服务器请求失败')
+    CODE_INVALID_ERROR = (40005, 'code 无效')
+    LOGIN_REQUIRED_ERROR = (40006, '需要登陆')
