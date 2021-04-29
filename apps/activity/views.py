@@ -44,7 +44,7 @@ def get_activities_list(request):
 def get_activity_detail(request):
     activity_id = request.GET.get('activity_id')
     if not activity_id:
-        return process_response(request, ResponseStatus.BAD_PARAMETER_ERROR)
+        return process_response(request, ResponseStatus.MISSING_PARAMETER_ERROR)
 
     activity = activity_model.Activity.objects.filter(id=activity_id).first()
     if not activity or not activity.display:
