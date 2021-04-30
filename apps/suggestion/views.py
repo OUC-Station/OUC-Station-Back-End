@@ -37,7 +37,7 @@ def get_my_suggestions(request):
     for one in suggestions:
         request.data['suggestions'].append({
             'content': one.content,
-            'create_time': one.create_time,
+            'create_time': one.create_time.strftime('%Y-%m-%d %H:%M:%S'),
             'reply': one.reply
         })
 

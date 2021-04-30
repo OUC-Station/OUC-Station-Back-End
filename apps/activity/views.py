@@ -34,7 +34,7 @@ def get_activities_list(request):
             'activity_id': one.id,
             'title': one.title,
             'cover': one.cover.url if one.cover else None,
-            'start_time': one.start_time
+            'start_time': one.start_time.strftime('%Y-%m-%d %H:%M:%S')
         })
 
     return process_response(request, ResponseStatus.OK)
@@ -55,8 +55,8 @@ def get_activity_detail(request):
         'title': activity.title,
         'cover': activity.cover.url if activity.cover else None,
         'content': activity.content,
-        'create_time': activity.create_time,
-        'start_time': activity.start_time
+        'create_time': activity.create_time.strftime('%Y-%m-%d %H:%M:%S'),
+        'start_time': activity.start_time.strftime('%Y-%m-%d %H:%M:%S')
     }
 
     return process_response(request, ResponseStatus.OK)

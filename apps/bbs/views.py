@@ -63,7 +63,7 @@ def get_topics(request):
             'account_avatar': one.account.avatar if not one.anonymous else None,
             'title': one.title,
             'content': one.content,
-            'create_time': one.create_time
+            'create_time': one.create_time.strftime('%Y-%m-%d %H:%M:%S')
         })
 
     return process_response(request, ResponseStatus.OK)
@@ -85,7 +85,7 @@ def get_topic_detail(request):
         'account_avatar': topic.account.avatar if not topic.anonymous else None,
         'title': topic.title,
         'content': topic.content,
-        'create_time': topic.create_time,
+        'create_time': topic.create_time.strftime('%Y-%m-%d %H:%M:%S'),
         'comments': []
     }
 
@@ -96,7 +96,7 @@ def get_topic_detail(request):
             'account_nickname': one.account.nick_name if not one.anonymous else '匿名用户',
             'account_avatar': one.account.avatar if not one.anonymous else None,
             'content': one.content,
-            'create_time': one.create_time
+            'create_time': one.create_time.strftime('%Y-%m-%d %H:%M:%S')
         })
 
     return process_response(request, ResponseStatus.OK)
