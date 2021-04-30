@@ -15,7 +15,7 @@ def get_locations_list(request):
         request.data['locations'].append({
             'location_id': one.id,
             'location_name': one.name,
-            'location_icon': one.icon.url,
+            'location_icon': one.icon.url if one.icon else None,
             'location_longitude': one.longitude,
             'location_latitude': one.latitude
         })
