@@ -1,7 +1,7 @@
 from apps.utils.response_processor import process_response
 from apps.utils.response_status import ResponseStatus
 from apps.utils.decorator import Protect, RequiredMethod
-from . import models as activity_model
+from apps.activity import models as activity_model
 from station import settings
 
 
