@@ -3,7 +3,7 @@ import requests
 
 from apps.utils.response_processor import process_response
 from apps.utils.response_status import ResponseStatus
-from apps.utils.decorator import Protect, RequiredMethod
+from apps.utils.decorator import Protect, RequiredMethod, LoginRequired
 from apps.utils.WXBizDataCrypt import WXBizDataCrypt
 from apps.account import models as account_models
 from station import settings
@@ -50,6 +50,7 @@ def login(request):
 
 
 @RequiredMethod('POST')
+@LoginRequired
 def update_user_info(request):
     request_data = json.loads(request.body)
 
