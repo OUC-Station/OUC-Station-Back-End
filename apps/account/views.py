@@ -54,7 +54,7 @@ def update_user_info(request):
     request_data = json.loads(request.body)
 
     encryptedData = request_data.get('encryptedData')
-    iv = request_data.get('encryptedData')
+    iv = request_data.get('iv')
 
     if not encryptedData or not iv:
         return process_response(request, ResponseStatus.BAD_PARAMETER_ERROR)
