@@ -69,6 +69,7 @@ def get_topics(request):
     return process_response(request, ResponseStatus.OK)
 
 
+@RequiredMethod('POST')
 def get_topic_detail(request):
     topic_id = request.GET.get('topic_id')
     if not topic_id:
@@ -102,6 +103,8 @@ def get_topic_detail(request):
     return process_response(request, ResponseStatus.OK)
 
 
+@RequiredMethod('POST')
+@LoginRequired
 def post_comment(request):
     request_data = json.loads(request.body)
 
