@@ -58,4 +58,4 @@ def LoginRequired(func):
         # 正常处理
         return func(request)
 
-    return
+    return wrapper
