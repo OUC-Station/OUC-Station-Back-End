@@ -68,8 +68,8 @@ def update_user_info(request):
         return process_response(request, ResponseStatus.BAD_PARAMETER_ERROR)
 
     account = account_models.Account.objects.filter(openid=request.session['openid']).first()
-    account.nick_name = user_info.get('nick_name')
-    account.avatar = user_info.get('avatar')
+    account.nick_name = user_info.get('nickName')
+    account.avatar = user_info.get('avatarUrl')
     account.save()
 
     return process_response(request, ResponseStatus.OK)
