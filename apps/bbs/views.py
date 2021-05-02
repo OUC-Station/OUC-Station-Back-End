@@ -108,7 +108,7 @@ def post_comment(request):
     topic_id = request_data.get('topic_id')
     content = request_data.get('content')
     anonymous = request_data.get('anonymous')
-    if not topic_id or not content or not anonymous:
+    if not topic_id or not content:
         return process_response(request, ResponseStatus.MISSING_PARAMETER_ERROR)
     if not isinstance(anonymous, bool):
         return process_response(request, ResponseStatus.BAD_PARAMETER_ERROR)
