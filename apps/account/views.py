@@ -15,7 +15,7 @@ def login(request):
 
     code = request_data.get('code')
     if not code:
-        return process_response(request, ResponseStatus.BAD_PARAMETER_ERROR)
+        return process_response(request, ResponseStatus.MISSING_PARAMETER_ERROR)
 
     WX_CODE2SESSION_URL = 'https://api.weixin.qq.com/sns/jscode2session'
     parameters = {
@@ -57,7 +57,7 @@ def update_user_info(request):
     iv = request_data.get('iv')
 
     if not encryptedData or not iv:
-        return process_response(request, ResponseStatus.BAD_PARAMETER_ERROR)
+        return process_response(request, ResponseStatus.MISSING_PARAMETER_ERROR)
 
     try:
         pc = WXBizDataCrypt(settings.WX_APPID, request.session['session_key'])
