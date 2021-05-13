@@ -82,7 +82,7 @@ def get_status(request):
         'is_login': False
     }
 
-    if request.session['openid']:
+    if request.session.get('openid', None) is not None:
         request.data['is_login'] = True
 
         account = account_models.Account.objects.filter(openid=request.session['openid']).first()
