@@ -1,5 +1,6 @@
 import json
 import requests
+import logging
 
 from apps.utils.response_processor import process_response
 from apps.utils.response_status import ResponseStatus
@@ -9,11 +10,15 @@ from apps.account import models as account_models
 from station import settings
 
 
+logger = logging.getLogger('django')
+
+
 @RequiredMethod('POST')
 def login(request):
     request_data = json.loads(request.body)
 
     code = request_data.get('code')
+    logger.info('code: {}'.format(code))
     if not code:
         return process_response(request, ResponseStatus.MISSING_PARAMETER_ERROR)
 
@@ -25,6 +30,7 @@ def login(request):
         'grant_type': 'authorization_code'
     }
     req = requests.get(WX_CODE2SESSION_URL, params=parameters)
+    logger.info(req.url)
     if req.status_code != 200:
         return process_response(request, ResponseStatus.WX_REQUEST_FAIL_ERROR)
 
