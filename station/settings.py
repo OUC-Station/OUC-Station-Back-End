@@ -13,15 +13,12 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 import json
 
-
 # Configuration file
 with open('./conf.json', 'r') as f:
     config = json.load(f)
 
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -33,7 +30,6 @@ SECRET_KEY = config.get('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = config.get('ALLOWED_HOSTS')
-
 
 # Application definition
 
@@ -84,7 +80,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'station.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -100,7 +95,6 @@ DATABASES = {
         'PORT': config.get('MYSQL_DATABASE_PORT')
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -120,7 +114,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -133,7 +126,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
@@ -148,7 +140,6 @@ MEDIA_ROOT = './media/'
 
 ACTIVITIES_PER_PAGE = 10
 TOPICS_PER_PAGE = 10
-
 
 # Cache Redis config
 
@@ -165,12 +156,10 @@ CACHES = {
     }
 }
 
-
 # session
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 SESSION_CACHE_ALIAS = 'default'
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 2
-
 
 # APP
 WX_APPID = config.get('WX_APPID')
@@ -178,3 +167,60 @@ WX_SECRET = config.get('WX_SECRET')
 
 # IMAGE
 IMAGE_MAX_SIZE = 5 * 1024 * 1024
+
+# logs
+LOG_PATH = os.path.join(BASE_DIR, "logs")
+if not os.path.exists(LOG_PATH):
+    os.makedirs("logs")
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            'format': '[%(asctime)s][%(threadName)s:%(thread)d][task_id:%(name)s][%(filename)s:%(lineno)d]'
+                      '[%(levelname)s][%(message)s]'
+        },
+        'simple': {
+            'format': '[%(levelname)s][%(asctime)s][%(filename)s:%(lineno)d]%(message)s'
+        },
+    },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'default': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(BASE_DIR + '/logs/', "all.log"),
+            'maxBytes': 1024 * 1024 * 50,
+            'backupCount': 1,
+            'formatter': 'standard',
+            'encoding': 'utf-8',
+        },
+        'error': {
+            'level': 'ERROR',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(BASE_DIR + '/logs/', "error.log"),
+            'maxBytes': 1024 * 1024 * 50,
+            'backupCount': 1,
+            'formatter': 'standard',
+            'encoding': 'utf-8',
+        }
+    },
+    'loggers': {
+        'django': {  # 默认的logger应用如下配置
+            'handlers': ['default', 'console', 'error'],  # 上线之后可以把'console'移除
+            'level': 'DEBUG',
+            'propagate': True,  # 向不向更高级别的logger传递
+        }
+    },
+}
