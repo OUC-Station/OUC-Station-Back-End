@@ -1,3 +1,5 @@
+import json
+
 from typing import Union
 from functools import wraps
 
@@ -13,8 +15,8 @@ def Protect(func):
     def wrapper(request):
         try:
             return func(request)
-        except Exception:
-            return process_response(request, ResponseStatus.UNEXPECTED_ERROR)
+        except json.JSONDecodeError:
+            return process_response(request, ResponseStatus.JSON_DECODE_ERROR)
 
     return wrapper
 

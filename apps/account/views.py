@@ -13,6 +13,7 @@ from station import settings
 logger = logging.getLogger('django')
 
 
+@Protect
 @RequiredMethod('POST')
 def login(request):
     request_data = json.loads(request.body)
