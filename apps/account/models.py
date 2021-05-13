@@ -13,4 +13,4 @@ class Account(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.nick_name
+        return self.nick_name if self.nick_name else '用户'
