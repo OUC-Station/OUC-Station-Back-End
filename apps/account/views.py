@@ -38,7 +38,7 @@ def login(request):
     wx_data = json.loads(req.content)
     if wx_data.get('errcode') == 40029:
         return process_response(request, ResponseStatus.CODE_INVALID_ERROR)
-    if wx_data.get('errcode') != 0:
+    if wx_data.get('errcode') and wx_data.get('errcode') != 0:
         return process_response(request, ResponseStatus.UNEXPECTED_ERROR)
 
     openid = wx_data.get('openid')
