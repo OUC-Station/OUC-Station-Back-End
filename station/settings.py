@@ -92,7 +92,9 @@ DATABASES = {
         'PASSWORD': config.get('MYSQL_DATABASE_PASSWORD'),
 
         'HOST': config.get('MYSQL_DATABASE_HOST'),
-        'PORT': config.get('MYSQL_DATABASE_PORT')
+        'PORT': config.get('MYSQL_DATABASE_PORT'),
+
+        'OPTIONS': {'charset': 'utf8mb4'},
     }
 }
 
