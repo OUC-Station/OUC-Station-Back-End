@@ -15,7 +15,7 @@ class Activity(models.Model):
     title = models.CharField(verbose_name='名称', max_length=200, null=False, blank=False)
     cover = models.ImageField(verbose_name='背景图', upload_to=upload_file_path, null=False, blank=True)
     content = UEditorField(verbose_name='内容', width=900, height=600, toolbars='mini', imagePath='',
-                           filePath='', upload_settings={'imageMaxSize': 1204000}, settings={},
+                           filePath='', upload_settings={'imageMaxSize': 5 * 1024 * 1024}, settings={},
                            command=None, blank=True)
     create_time = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
     start_time = models.DateTimeField(verbose_name='开始时间')
