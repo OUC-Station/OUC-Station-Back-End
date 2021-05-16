@@ -63,7 +63,8 @@ def get_topics(request):
             'account_avatar': one.account.avatar if not one.anonymous else None,
             'title': one.title,
             'content': one.content,
-            'create_time': one.create_time.strftime('%Y-%m-%d %H:%M:%S')
+            'create_time': one.create_time.strftime('%Y-%m-%d %H:%M:%S'),
+            'count': bbs_models.Comment.objects.filter(topic=one).count()
         })
 
     return process_response(request, ResponseStatus.OK)
