@@ -70,7 +70,7 @@ def get_topics(request):
     return process_response(request, ResponseStatus.OK)
 
 
-@RequiredMethod('POST')
+@RequiredMethod('GET')
 def get_topic_detail(request):
     topic_id = request.GET.get('topic_id')
     if not topic_id:
