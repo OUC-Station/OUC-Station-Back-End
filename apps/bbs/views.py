@@ -102,7 +102,8 @@ def get_topic_detail(request):
             'account_nickname': one.account.nick_name if not one.anonymous else '匿名用户',
             'account_avatar': one.account.avatar if not one.anonymous else None,
             'content': one.content,
-            'create_time': one.create_time.strftime('%Y-%m-%d %H:%M:%S')
+            'create_time': one.create_time.strftime('%Y-%m-%d %H:%M:%S'),
+            'can_delete': True if openid and openid == one.account.openid else False
         })
 
     return process_response(request, ResponseStatus.OK)
@@ -152,5 +153,27 @@ def post_comment(request):
     comment = bbs_models.Comment(account=account, anonymous=anonymous,
                                  topic=topic, content=content)
     comment.save()
+
+    return process_response(request, ResponseStatus.OK)
+
+
+@RequiredMethod('POST')
+@LoginRequired
+def delete_comment(request):
+    request_data = json.loads(request.body)
+
+    comment_id = request_data.get('comment_id')
+    if not comment_id:
+        return process_response(request, ResponseStatus.MISSING_PARAMETER_ERROR)
+
+    comment = bbs_models.Comment.objects.filter(id=comment_id).first()
+    if not comment:
+        return process_response(request, ResponseStatus.BAD_PARAMETER_ERROR)
+
+    openid = request.session.get('openid')
+    if openid != comment.account.openid:
+        return process_response(request, ResponseStatus.BAD_PARAMETER_ERROR)
+
+    comment.delete()
 
     return process_response(request, ResponseStatus.OK)
