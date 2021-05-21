@@ -20,5 +20,6 @@ urlpatterns = [
     path('post_topic', views.post_topic),
     path('get_topics', views.get_topics),
     path('get_topic_detail', views.get_topic_detail),
+    path('delete_topic', views.delete_topic),
     path('post_comment', views.post_comment),
 ]

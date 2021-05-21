@@ -55,6 +55,7 @@ def get_topics(request):
         'num': len(topics)
     }
 
+    openid = request.session.get('openid')
     for one in topics:
         request.data['topics'].append({
             'topic_id': one.id,
@@ -64,7 +65,8 @@ def get_topics(request):
             'title': one.title,
             'content': one.content,
             'create_time': one.create_time.strftime('%Y-%m-%d %H:%M:%S'),
-            'count': bbs_models.Comment.objects.filter(topic=one).count()
+            'count': bbs_models.Comment.objects.filter(topic=one).count(),
+            'can_delete': True if openid and openid == one.account.openid else False
         })
 
     return process_response(request, ResponseStatus.OK)
@@ -80,6 +82,7 @@ def get_topic_detail(request):
     if not topic:
         return process_response(request, ResponseStatus.BAD_PARAMETER_ERROR)
 
+    openid = request.session.get('openid')
     request.data = {
         'topic_id': topic.id,
         'anonymous': topic.anonymous,
@@ -88,6 +91,7 @@ def get_topic_detail(request):
         'title': topic.title,
         'content': topic.content,
         'create_time': topic.create_time.strftime('%Y-%m-%d %H:%M:%S'),
+        'can_delete': True if openid and openid == topic.account.openid else False,
         'comments': []
     }
 
@@ -100,6 +104,28 @@ def get_topic_detail(request):
             'content': one.content,
             'create_time': one.create_time.strftime('%Y-%m-%d %H:%M:%S')
         })
+
+    return process_response(request, ResponseStatus.OK)
+
+
+@RequiredMethod('POST')
+@LoginRequired
+def delete_topic(request):
+    request_data = json.loads(request.body)
+
+    topic_id = request_data.get('topic_id')
+    if not topic_id:
+        return process_response(request, ResponseStatus.MISSING_PARAMETER_ERROR)
+
+    topic = bbs_models.Topic.objects.filter(id=topic_id).first()
+    if not topic:
+        return process_response(request, ResponseStatus.BAD_PARAMETER_ERROR)
+
+    openid = request.session.get('openid')
+    if openid != topic.account.openid:
+        return process_response(request, ResponseStatus.BAD_PARAMETER_ERROR)
+
+    topic.delete()
 
     return process_response(request, ResponseStatus.OK)
 
