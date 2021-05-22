@@ -1,4 +1,5 @@
 import json
+import logging
 
 from apps.utils.response_processor import process_response
 from apps.utils.response_status import ResponseStatus
@@ -6,6 +7,9 @@ from apps.utils.decorator import Protect, RequiredMethod, LoginRequired
 from apps.account import models as account_models
 from apps.bbs import models as bbs_models
 from station import settings
+
+
+logger = logging.getLogger('django')
 
 
 @RequiredMethod('POST')
@@ -83,6 +87,7 @@ def get_topic_detail(request):
         return process_response(request, ResponseStatus.BAD_PARAMETER_ERROR)
 
     openid = request.session.get('openid')
+
     request.data = {
         'topic_id': topic.id,
         'anonymous': topic.anonymous,
@@ -94,6 +99,9 @@ def get_topic_detail(request):
         'can_delete': True if openid and openid == topic.account.openid else False,
         'comments': []
     }
+    logger.info('openid: {}, topic.account.openid: {}, {}'.format(openid,
+                                                                  topic.account.openid,
+                                                                  request.data['can_delete']))
 
     comments = bbs_models.Comment.objects.filter(topic=topic).order_by('create_time')
     for one in comments:
