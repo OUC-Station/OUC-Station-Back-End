@@ -13,6 +13,9 @@ class Topic(models.Model):
         verbose_name = '主题'
         verbose_name_plural = verbose_name
 
+    def __str__(self):
+        return self.content
+
 
 class Comment(models.Model):
     account = models.ForeignKey('account.Account', verbose_name='用户', on_delete=models.CASCADE)
@@ -25,3 +28,6 @@ class Comment(models.Model):
     class Meta:
         verbose_name = '评论'
         verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.content
